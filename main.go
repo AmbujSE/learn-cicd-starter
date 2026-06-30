@@ -56,12 +56,12 @@ func main() {
 	router := chi.NewRouter()
 
 	router.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://*", "http://*"},
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"*"},
-		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: false,
-		MaxAge:           300,
+		AllowedOrigin:   []string{"https://*", "http://*"},
+		AllowedMethod:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeader:   []string{"*"},
+		ExposedHeader:   []string{"Link"},
+		AllowCredential: false,
+		MaxAge:          300,
 	}))
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
