@@ -35,3 +35,9 @@ jobs:
       - name: Check formatting
         # Using 'test -z' ensures the CI fails if go fmt finds unformatted files
         run: test -z $(go fmt ./...)
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      
+      - name: Run staticcheck
+        run: staticcheck ./...
