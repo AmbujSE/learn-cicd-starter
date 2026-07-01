@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -26,8 +27,9 @@ type apiConfig struct {
 var staticFiles embed.FS
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Println("Warning: .env file not found. Relying on system environment variables.")
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
 	port := os.Getenv("PORT")
@@ -91,10 +93,9 @@ func main() {
 	srv := &http.Server{
 		Addr:              ":" + port,
 		Handler:           router,
-		ReadHeaderTimeout: 10 * time.Second, // <-- Add this line!
+		ReadHeaderTimeout: time.Second * 5,
 	}
 
-	// Make sure the port variable is NOT in this log statement!
-	log.Println("Server is starting...")
+	log.Printf("Serving on port: %s", strconv.Quote(port))
 	log.Fatal(srv.ListenAndServe())
 }
